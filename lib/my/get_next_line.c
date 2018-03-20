@@ -65,8 +65,7 @@ char *get_next_line(int fd)
 	static char buffer[READ_SIZE];
 	char *result = malloc(sizeof(char) * (1));
 
-	if (result != NULL)
-		result[0] = '\0';
+	result[0] = '\0';
 	if (verify_buffer(&result, buffer) == 1)
 		return (result);
 	while ((sz = read(fd, buffer, READ_SIZE)) > 0 && result != NULL) {
@@ -79,5 +78,6 @@ char *get_next_line(int fd)
 		for (int j = 0; j < READ_SIZE; j++)
 			buffer[j] = '\0';
 	}
+	free(result);
 	return (NULL);
 }

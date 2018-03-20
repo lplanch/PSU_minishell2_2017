@@ -15,6 +15,10 @@ LDFLAGS		+=	-L lib/my/ -lmy
 
 FILES		=	src/main_minishell2.c			\
 			src/prompt_handling.c			\
+			src/command_formating.c			\
+			src/free_minishell2.c			\
+			src/signals_handling.c			\
+			src/env_handling.c			\
 
 SRCS		=	$(FILES)
 
