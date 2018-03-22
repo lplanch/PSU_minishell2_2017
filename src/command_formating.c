@@ -74,3 +74,12 @@ void get_user_command(svar_t *svar)
 	svar->c_cmd = make_clean_cmd(svar->t_cmd);
 	svar->n_cmd = get_command_without_args(svar->c_cmd);
 }
+
+int verify_command(char *command, char *verify)
+{
+	for (int i = 0; verify[i] != '\0'; i++) {
+		if (verify[i] != command[i])
+			return (0);
+	}
+	return (1);
+}

@@ -43,10 +43,13 @@ int search_env(char *name, svar_t *svar)
 	return(result);
 }
 
-void print_env(char **envp)
+int verify_env_command(svar_t *svar)
 {
-	for (int i = 0; envp[i] != NULL; i++) {
-		my_putstr(envp[i]);
+	if (my_strcmp(svar->t_cmd, "env") != 0)
+		return (0);
+	for (int i = 0; svar->c_env[i] != NULL; i++) {
+		my_putstr(svar->c_env[i]);
 		my_putchar('\n');
 	}
+	return (1);
 }
