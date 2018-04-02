@@ -95,7 +95,7 @@ load_test()
       then
         echo "Output $MYSHELL :"
         $CAT -e /tmp/.shell.$$
-        echo "" 
+        echo ""
         echo "Output $REFER :"
         $CAT -e /tmp/.refer.$$
         echo ""
@@ -106,10 +106,10 @@ load_test()
   else
     if [ $debug -ge 1 ]
     then
-      echo "Test $id ($NAME) : KO - Check output in /tmp/test.$$/$id/" 
-      $MKDIR -p /tmp/test.$$/$id 2>/dev/null
-      $CP /tmp/.shell.$$ /tmp/test.$$/$id/mysh.out
-      $CP /tmp/.refer.$$ /tmp/test.$$/$id/tcsh.out
+      echo "Test $id ($NAME) : KO - Check output in tester/output.$$/$id/"
+      $MKDIR -p /home/planch2/delivery/unix-system-programming/PSU_minishell2_2017/tester/output.$$/$id 2>/dev/null
+      $CP /tmp/.shell.$$ /home/planch2/delivery/unix-system-programming/PSU_minishell2_2017/tester/output.$$/$id/mysh.out
+      $CP /tmp/.refer.$$ /home/planch2/delivery/unix-system-programming/PSU_minishell2_2017/tester/output.$$/$id/tcsh.out
     else
       echo "KO"
     fi

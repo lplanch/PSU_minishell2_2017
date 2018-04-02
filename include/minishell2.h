@@ -38,6 +38,7 @@ char *make_clean_cmd(char *buff);
 
 //EXEC OTHER PATH COMMAND
 int exec_outside(svar_t *svar, char *command);
+int exec_outside_wpath(svar_t *svar, char *command);
 
 //CD HANDLING
 int cd_less(svar_t *svar, char *command, char *pathname);
@@ -66,6 +67,7 @@ char *get_command_without_args(char *cmd);
 int search_env(char *name, svar_t *svar);
 char *get_env(char *line);
 int verify_exist_pwd(svar_t *svar);
+char **get_path(svar_t *svar);
 
 //SIGNALS
 void verify_signals(void);
