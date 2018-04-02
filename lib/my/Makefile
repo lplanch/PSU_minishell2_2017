@@ -12,6 +12,7 @@ CC		=	cc
 FILES		=	my_putchar.c		\
 			my_put_nbr.c		\
 			my_put_nbrror.c		\
+			my_putarr.c		\
 			my_put_llnbr.c		\
 			my_putstr.c		\
 			my_strlen.c		\

@@ -22,7 +22,7 @@ char *get_command_without_args(char *cmd)
 	cmd[i] != ' ' && cmd[i] != '\t'; i++) {
 		result[i] = cmd[i];
 	}
-	return(result);
+	return (result);
 }
 
 int count_clean_cmd(char *buff)
@@ -39,7 +39,7 @@ int count_clean_cmd(char *buff)
 			len += 1;
 		}
 	}
-	return(len);
+	return (len);
 }
 
 char *make_clean_cmd(char *buff)
@@ -63,16 +63,17 @@ char *make_clean_cmd(char *buff)
 	if (j > 0)
 		result[j - 1] = (result[j - 1] == ' ' ? '\0' : result[j - 1]);
 	result[j] = '\0';
-	return(result);
+	return (result);
 }
 
 void get_user_command(svar_t *svar)
 {
-	svar->t_cmd = get_next_line(0);
-	if (svar->t_cmd == NULL)
+	svar->t_all_cmd = get_next_line(0);
+	if (svar->t_all_cmd == NULL)
 		return;
-	svar->c_cmd = make_clean_cmd(svar->t_cmd);
-	svar->n_cmd = get_command_without_args(svar->c_cmd);
+	svar->c_all_cmd = make_clean_cmd(svar->t_all_cmd);
+	svar->c_all_cmd = semicolon_formating(svar->c_all_cmd);
+	svar->c_cmd = make_table_command(svar->c_all_cmd);
 }
 
 int verify_command(char *command, char *verify)

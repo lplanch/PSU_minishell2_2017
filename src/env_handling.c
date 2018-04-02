@@ -14,7 +14,7 @@ char *get_env(char *line)
 
 	while (line[i] != '=')
 		i = i + 1;
-	return(&line[i + 1]);
+	return (&line[i + 1]);
 }
 
 int compar_env(char *name, char *cmp)
@@ -23,10 +23,10 @@ int compar_env(char *name, char *cmp)
 
 	for (j = 0; cmp[j] != '=' && name[j] != '\0'; j++) {
 		if (name[j] != cmp[j])
-			return(0);
+			return (0);
 	} if (cmp[j] == '=' && name[j] == '\0')
-		return(1);
-	return(0);
+		return (1);
+	return (0);
 }
 
 int search_env(char *name, svar_t *svar)
@@ -37,15 +37,15 @@ int search_env(char *name, svar_t *svar)
 	for (i = 0; svar->c_env[i] != NULL; i++) {
 		if (compar_env(name, svar->c_env[i]) == 1) {
 			result = i;
-			return(result);
+			return (result);
 		}
 	}
-	return(result);
+	return (result);
 }
 
-int verify_env_command(svar_t *svar)
+int verify_env_command(svar_t *svar, char *command)
 {
-	if (my_strcmp(svar->t_cmd, "env") != 0)
+	if (my_strcmp(command, "env") != 0)
 		return (0);
 	for (int i = 0; svar->c_env[i] != NULL; i++) {
 		my_putstr(svar->c_env[i]);

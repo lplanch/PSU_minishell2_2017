@@ -19,12 +19,16 @@ FILES		=	src/main_minishell2.c			\
 			src/free_minishell2.c			\
 			src/signals_handling.c			\
 			src/cd_handling.c			\
-			src/other_cd_handling.c			\
+			src/cd_verify_handling.c		\
+			src/switch_env_handling.c		\
 			src/env_handling.c			\
+			src/env_verify.c			\
 			src/exit_handling.c			\
 			src/binary_handling.c			\
 			src/exec_outside.c			\
 			src/verify_user_command.c		\
+			src/command_handling.c			\
+			src/arguments_handling.c		\
 
 SRCS		=	$(FILES)
 

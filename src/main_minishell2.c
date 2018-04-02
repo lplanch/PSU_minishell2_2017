@@ -10,7 +10,7 @@
 
 void verify_keyboard_exit(svar_t *svar)
 {
-	if (svar->t_cmd == NULL) {
+	if (svar->t_all_cmd == NULL) {
 		my_putstr("exit\n");
 		svar->done = 1;
 	}
@@ -30,9 +30,9 @@ svar_t *init_svar(char **envp)
 		svar->c_env = my_tbl_append(svar->c_env, path_temp);
 		free(path_temp);
 	}
-	svar->t_cmd = NULL;
+	svar->t_all_cmd = NULL;
+	svar->c_all_cmd = NULL;
 	svar->c_cmd = NULL;
-	svar->n_cmd = NULL;
 	svar->done = 0;
 }
 
@@ -45,7 +45,7 @@ int main(int ac, char **av, char **envp)
 		print_custom_prompt(svar);
 		get_user_command(svar);
 		verify_keyboard_exit(svar);
-		verify_user_command(svar);
+		parse_user_commands(svar);
 		free_svar_while(svar);
 	}
 	free_svar_exit(svar);

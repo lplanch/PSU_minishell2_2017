@@ -21,7 +21,7 @@ void print_user(svar_t *svar)
 void print_cwd_getcwd(svar_t *svar)
 {
 	int last_chr;
-	char cwd[512];
+	char cwd[1024];
 
 	if ((getcwd(cwd, sizeof(cwd))) == NULL)
 		return;

@@ -29,7 +29,7 @@ char **get_path(svar_t *svar)
 	}
 	result[j][k] = '\0';
 	result[j + 1] = NULL;
-	return(result);
+	return (result);
 }
 
 int exec_out_prm(char *c_path, char *buff, svar_t *svar)
@@ -55,41 +55,29 @@ int exec_out_prm(char *c_path, char *buff, svar_t *svar)
 			my_putstrror("\n");
 
 	}
-	return(1);
+	return (1);
 }
 
-int exec_outside_without_path(svar_t *svar)
-{
-	char *path_tbl = "/usr/bin/";
-	char *c_path = my_strcat(path_tbl, svar->n_cmd);
-
-	if (access(c_path, F_OK) == 0) {
-		exec_out_prm(c_path, svar->t_cmd, svar);
-		free(c_path);
-		return(1);
-	}
-	free(c_path);
-	return(0);
-}
-
-int exec_outside(svar_t *svar)
+int exec_outside(svar_t *svar, char *command)
 {
 	int result;
 	char *c_path;
 	char *file_name;
+	char *command_name;
 	char **path_tbl = get_path(svar);
 
 	for (int i = 0; path_tbl[i] != NULL; i++) {
-		file_name = my_strcat("/", svar->n_cmd);
+		command_name = get_command_without_args(command);
+		file_name = my_strcat("/", command_name);
+		free(command_name);
 		c_path = my_strcat(path_tbl[i], file_name);
-		if (access(c_path, F_OK) == 0) {
-			exec_out_prm(c_path, svar->t_cmd, svar);
-			free(file_name);
-			free(c_path);
-			return(1);
-		}
 		free(file_name);
+		if (access(c_path, F_OK) == 0) {
+			exec_out_prm(c_path, command, svar);
+			free(c_path);
+			return (1);
+		}
 		free(c_path);
 	}
-	return(0);
+	return (0);
 }

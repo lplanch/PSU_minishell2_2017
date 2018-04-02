@@ -39,6 +39,8 @@ void my_putchar(char c);
 char **create_table(char *str);
 
 void my_putstr(char *str);
+void my_putarr(char **array);
+
 char *get_str_untill(char *str, char chr);
 char *rm_str_untill(char *str, char chr);
 

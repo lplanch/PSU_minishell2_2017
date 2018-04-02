@@ -8,24 +8,42 @@
 #include "my.h"
 #include "minishell2.h"
 
-void verify_user_command(svar_t *svar)
+void start_binary_command(svar_t *svar, char *command)
+{
+	char *command_name;
+	int iter = 0;
+
+	if (search_env("PATH", svar) == 1)
+		iter = exec_outside(svar, command);
+	if (!iter && command[0] != '\0') {
+		command_name = get_command_without_args(command);
+		my_putstrror(command_name);
+		my_putstrror(": Command not found.\n");
+		free(command_name);
+	}
+}
+
+void verify_user_command(svar_t *svar, char *command)
 {
 	int iter = 0;
-	int (*diff_cmd[4])(svar_t *svar) =
-	{verify_exit_command, verify_env_command, verify_binary_command, NULL};
+	int (*diff_cmd[5])(svar_t *svar, char *command) =
+	{verify_exit_command, verify_cd_command, verify_env_command,
+	verify_binary_command, NULL};
 
 	if (svar->done != 0)
 		return;
 	for (int i = 0; diff_cmd[i] != NULL && iter == 0; i++)
-		iter = (*diff_cmd[i])(svar);
+		iter = (*diff_cmd[i])(svar, command);
 	if (!iter) {
-		if (search_env("PATH", svar) == 1)
-			iter = exec_outside(svar);
-		else
-			iter = exec_outside_without_path(svar);
-		if (!iter && svar->t_cmd[0] != '\0') {
-			my_putstrror(svar->n_cmd);
-			my_putstrror(": Command not found.\n");
-		}
+		start_binary_command(svar, command);
+	}
+}
+
+void parse_user_commands(svar_t *svar)
+{
+	if (svar->done != 0)
+		return;
+	for (int i = 0; svar->c_cmd[i] != NULL; i++) {
+		verify_user_command(svar, svar->c_cmd[i]);
 	}
 }
