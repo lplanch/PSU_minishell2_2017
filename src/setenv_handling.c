@@ -16,7 +16,6 @@ int char_is_ok_setenv(char chr)
 
 int verify_setenv_chars(char *f_arg)
 {
-	printf("farg : \"%s\"\n", f_arg);
 	if (is_letter(f_arg[0]) == 0) {
 		my_putstrror("setenv: Variable name must begin");
 		my_putstrror(" with a letter.\n");

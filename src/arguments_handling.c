@@ -39,11 +39,10 @@ char *get_args_nbr(char *buffer, int number)
 	}
 	j = i;
 	for (i; buffer[i] != '\0' && buffer[i] != ' '; i++);
-	result = malloc(sizeof(char) * (i - j + 1));
-	for (j; buffer[j] != '\0' && buffer[i] != ' '; j++) {
+	result = my_calloc(sizeof(char) * (i - j + 1));
+	for (j; buffer[j] != '\0' && buffer[j] != ' '; j++) {
 		result[k] = buffer[j];
 		k += 1;
 	}
-	result[k] = '\0';
 	return (result);
 }
