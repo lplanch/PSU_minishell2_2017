@@ -8,15 +8,17 @@
 #include "my.h"
 #include "minishell2.h"
 
-void print_core_dump_errors(int wstatus)
+void print_core_dump_errors(svar_t *svar, int wstatus)
 {
-	if (wstatus == 139 || wstatus == SIGSEGV)
+	if (wstatus == 139 || wstatus == SIGSEGV) {
 		my_putstrror("Segmentation fault");
-	if (wstatus == SIGFPE)
+		svar->returnv = 139;
+	} if (wstatus == SIGFPE) {
 		my_putstrror("Floating point exception");
-	if (WCOREDUMP(wstatus))
+		svar->returnv = 136;
+	} if (WCOREDUMP(wstatus)) {
 		my_putstrror(" (core dumped)");
-	if (wstatus == 139 || wstatus == SIGSEGV ||
+	} if (wstatus == 139 || wstatus == SIGSEGV ||
 		wstatus == SIGPIPE || WCOREDUMP(wstatus))
 		my_putstrror("\n");
 }
@@ -33,7 +35,7 @@ int exec_out_prm(char *c_path, char *buff, svar_t *svar)
 		exit(0);
 	} else {
 		waitpid(pid, &wstatus, 0);
-		print_core_dump_errors(wstatus);
+		print_core_dump_errors(svar, wstatus);
 	}
 	return (1);
 }
@@ -64,13 +66,13 @@ int exec_outside(svar_t *svar, char *command)
 	int iter = 0;
 	char **path_tbl;
 
+	svar->returnv = 0;
 	if (search_env("PATH", svar) == -1)
 		return (0);
 	path_tbl = get_path(svar);
 	for (int i = 0; path_tbl[i] != NULL; i++) {
 		iter = verify_path_exec(svar, command, path_tbl[i]);
 		if (iter == 1) {
-			svar->returnv = 0;
 			free_tbl(path_tbl);
 			return (1);
 		}
