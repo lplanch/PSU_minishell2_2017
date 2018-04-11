@@ -11,7 +11,7 @@
 void sig_handler(int sig_num)
 {
 	switch (sig_num) {
-		case SIGINT:
+	case SIGINT:
 		my_putstr("\b\b  \b\b");
 		return;
 	}

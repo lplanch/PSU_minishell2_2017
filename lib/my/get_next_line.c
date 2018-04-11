@@ -14,7 +14,7 @@ char *my_strcat_nl(char *str1, char *str2)
 	(my_strlen(str1) + my_strlen(str2) + 1));
 
 	if (result == NULL)
-		return(NULL);
+		return (NULL);
 	for (int i = 0; str1[i] != '\0'; i++) {
 		result[j] = str1[i];
 		j++;

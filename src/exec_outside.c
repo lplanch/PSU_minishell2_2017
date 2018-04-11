@@ -17,7 +17,7 @@ void print_core_dump_errors(int wstatus)
 	if (WCOREDUMP(wstatus))
 		my_putstrror(" (core dumped)");
 	if (wstatus == 139 || wstatus == SIGSEGV ||
-	wstatus == SIGPIPE || WCOREDUMP(wstatus))
+		wstatus == SIGPIPE || WCOREDUMP(wstatus))
 		my_putstrror("\n");
 }
 

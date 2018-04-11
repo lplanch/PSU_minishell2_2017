@@ -27,9 +27,10 @@ void start_binary_command(svar_t *svar, char *command)
 void verify_user_command(svar_t *svar, char *command)
 {
 	int iter = 0;
-	int (*diff_cmd[7])(svar_t *svar, char *command) =
+	int (*diff_cmd[9])(svar_t *svar, char *command) =
 	{verify_exit_command, verify_cd_command, verify_env_command,
-	verify_binary_command, exec_outside, NULL};
+		verify_setenv_command, verify_unsetenv_command,
+		verify_binary_command, exec_outside, NULL};
 
 	if (svar->done != 0)
 		return;

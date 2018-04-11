@@ -17,7 +17,7 @@ int cd_pathname(svar_t *svar, char *command, char *pathname)
 		my_putstrror(pathname);
 		my_putstrror(": No such file or directory.\n");
 		svar->returnv = 1;
-	        return (0);
+		return (0);
 	}
 	if (!S_ISDIR(fstat.st_mode)) {
 		my_putstrror(pathname);

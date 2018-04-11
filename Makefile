@@ -22,6 +22,8 @@ FILES		=	src/main_minishell2.c			\
 			src/cd_verify_handling.c		\
 			src/switch_env_handling.c		\
 			src/env_handling.c			\
+			src/setenv_handling.c			\
+			src/unsetenv_handling.c			\
 			src/env_verify.c			\
 			src/exit_handling.c			\
 			src/binary_handling.c			\

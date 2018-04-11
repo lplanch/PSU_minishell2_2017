@@ -29,7 +29,8 @@ char *semicolon_formating(char *command)
 
 	for (int i = 0; command[i] != '\0'; i++) {
 		if (command[i] == ';' &&
-		((i != 0 && command[i - 1] != ' ') || command[i + 1] != ' '))
+			((i != 0 && command[i - 1] != ' ') ||
+			command[i + 1] != ' '))
 			nbr_to_add += 1;
 	}
 	result = my_calloc(sizeof(char) * (my_strlen(command) + nbr_to_add));

@@ -29,6 +29,8 @@ void parse_user_commands(svar_t *svar);
 int verify_exit_command(svar_t *svar, char *command);
 int verify_env_command(svar_t *svar, char *command);
 int verify_cd_command(svar_t *svar, char *command);
+int verify_setenv_command(svar_t *svar, char *command);
+int verify_unsetenv_command(svar_t *svar, char *command);
 int verify_binary_command(svar_t *svar, char *command);
 int exec_out_prm(char *c_path, char *buff, svar_t *svar);
 
@@ -69,6 +71,7 @@ int search_env(char *name, svar_t *svar);
 char *get_env(char *line);
 int verify_exist_pwd(svar_t *svar);
 char **get_path(svar_t *svar);
+void print_env(svar_t *svar);
 
 //SIGNALS
 void verify_signals(void);

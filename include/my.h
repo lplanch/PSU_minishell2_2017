@@ -47,12 +47,8 @@ char *rm_str_untill(char *str, char chr);
 int sum_stdarg(int i, int nb, ...);
 char *my_strcat(char *str1, char *str2);
 
-int isNumber(char *str);
-
 int is_letter(char chr);
 void my_putcharror(char chr);
-
-void printChr(char *str);
 
 int str_to_int(char *str);
 
