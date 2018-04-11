@@ -20,6 +20,7 @@ void start_binary_command(svar_t *svar, char *command)
 		my_putstrror(command_name);
 		my_putstrror(": Command not found.\n");
 		free(command_name);
+		svar->returnv = 1;
 	}
 }
 
@@ -28,7 +29,7 @@ void verify_user_command(svar_t *svar, char *command)
 	int iter = 0;
 	int (*diff_cmd[7])(svar_t *svar, char *command) =
 	{verify_exit_command, verify_cd_command, verify_env_command,
-	verify_binary_command, exec_outside, exec_outside_wpath, NULL};
+	verify_binary_command, exec_outside, NULL};
 
 	if (svar->done != 0)
 		return;

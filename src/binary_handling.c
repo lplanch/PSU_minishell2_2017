@@ -8,75 +8,19 @@
 #include "my.h"
 #include "minishell2.h"
 
-char *cat_both_path(char *path1, char *path2)
-{
-	int i = 0;
-	int j = 0;
-	char *result;
-
-	for (i; path2[i] != '/' && path2[i] != '\0'; i++);
-	result = (char *)my_calloc(sizeof(char) *
-	(my_strlen(path1) + my_strlen(path2) - i + 1));
-	for (j = 0; path1[j] != '\0'; j++)
-		result[j] = path1[j];
-	for (i; path2[i] != '\0'; i++) {
-		result[j] = path2[i];
-		j++;
-	}
-	result[j] = '\0';
-	return (result);
-}
-
-int is_directory(char *path)
-{
-	struct stat sb;
-
-	stat(path, &sb);
-	return S_ISDIR(sb.st_mode);
-}
-
-int verify_permissions(char *path, svar_t *svar, char *command)
-{
-	if (access(path, F_OK) == 0) {
-		if (access(path, X_OK) == 0 && is_directory(path) == 0) {
-			return (1);
-		} else {
-			my_putstrror(command);
-			my_putstrror(": Permission denied.\n");
-		}
-	} else {
-		my_putstrror(command);
-		my_putstrror(": Command not found.\n");
-	}
-	return (0);
-}
-
-void execute_bin(svar_t *svar, char *command)
-{
-	char *pwd;
-	char *path;
-
-	if (command[0] == '.') {
-		pwd = get_env(svar->c_env[search_env("PWD", svar)]);
-		path = cat_both_path(pwd, command);
-		if (verify_permissions(path, svar, command) == 0)
-			return;
-		exec_out_prm(path, command, svar);
-		free(path);
-	} else {
-		path = command;
-		if (verify_permissions(path, svar, command) == 0)
-			return;
-		exec_out_prm(path, command, svar);
-	}
-}
-
 int verify_binary_command(svar_t *svar, char *command)
 {
-	if (command[0] == '/' ||
-	(command[0] == '.' && command[1] == '/')) {
-		execute_bin(svar, command);
-		return (1);
+	struct stat fstat;
+
+	if (stat(command, &fstat) < 0)
+		return (0);
+	if (!S_ISDIR(fstat.st_mode) && fstat.st_mode & S_IXUSR) {
+		exec_out_prm(command, command, svar);
+		svar->returnv = 0;
+	} else {
+		my_putstrror(command);
+		my_putstrror(": Permission denied.\n");
+		svar->returnv = 1;
 	}
-	return (0);
+	return (1);
 }

@@ -17,6 +17,7 @@
 typedef struct shell_var
 {
 	int done;
+	int returnv;
 	char **c_env;
 	char *t_all_cmd;
 	char *c_all_cmd;
@@ -51,7 +52,7 @@ void make_new_pwd(svar_t *svar, char *new_pwd);
 
 //FREE EVERYTHING
 void free_svar_while(svar_t *svar);
-void free_svar_exit(svar_t *svar);
+int free_svar_exit(svar_t *svar);
 
 //PROMPT
 void print_custom_prompt(svar_t *svar);

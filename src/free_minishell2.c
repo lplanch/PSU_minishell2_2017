@@ -21,8 +21,11 @@ void free_svar_while(svar_t *svar)
 	svar->c_cmd = NULL;
 }
 
-void free_svar_exit(svar_t *svar)
+int free_svar_exit(svar_t *svar)
 {
+	int return_value = svar->returnv;
+
 	free_tbl(svar->c_env);
 	free(svar);
+	return (return_value);
 }

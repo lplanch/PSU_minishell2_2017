@@ -13,4 +13,5 @@ int verify_exit_command(svar_t *svar, char *command)
 	if (!verify_command(command, "exit"))
 		return (0);
 	svar->done = 1;
+	svar->returnv = 0;
 }

@@ -76,5 +76,6 @@ int verify_cd_command(svar_t *svar, char *command)
 	if (!verify_command(command, "cd"))
 		return (0);
 	main_cd_command(svar, command);
+	svar->returnv = 0;
 	return (1);
 }

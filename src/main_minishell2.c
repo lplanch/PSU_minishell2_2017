@@ -34,6 +34,7 @@ svar_t *init_svar(char **envp)
 	svar->c_all_cmd = NULL;
 	svar->c_cmd = NULL;
 	svar->done = 0;
+	svar->returnv = 0;
 }
 
 int main(int ac, char **av, char **envp)
@@ -48,6 +49,5 @@ int main(int ac, char **av, char **envp)
 		parse_user_commands(svar);
 		free_svar_while(svar);
 	}
-	free_svar_exit(svar);
-	return (0);
+	return (free_svar_exit(svar));
 }

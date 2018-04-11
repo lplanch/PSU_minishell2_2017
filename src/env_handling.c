@@ -51,5 +51,6 @@ int verify_env_command(svar_t *svar, char *command)
 		my_putstr(svar->c_env[i]);
 		my_putchar('\n');
 	}
+	svar->returnv = 0;
 	return (1);
 }

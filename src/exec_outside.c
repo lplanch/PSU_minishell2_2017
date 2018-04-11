@@ -38,22 +38,6 @@ int exec_out_prm(char *c_path, char *buff, svar_t *svar)
 	return (1);
 }
 
-int exec_outside_wpath(svar_t *svar, char *command)
-{
-	char path_tbl[] = "/usr/bin/";
-	char *w_cmd = get_command_without_args(command);
-	char *c_path = my_strcat(path_tbl, w_cmd);
-
-	free(w_cmd);
-	if (access(c_path, F_OK) == 0) {
-		exec_out_prm(c_path, command, svar);
-		free(c_path);
-		return(1);
-	}
-	free(c_path);
-	return(0);
-}
-
 int verify_path_exec(svar_t *svar, char *command, char *path_line)
 {
 	int result;
@@ -86,6 +70,7 @@ int exec_outside(svar_t *svar, char *command)
 	for (int i = 0; path_tbl[i] != NULL; i++) {
 		iter = verify_path_exec(svar, command, path_tbl[i]);
 		if (iter == 1) {
+			svar->returnv = 0;
 			free_tbl(path_tbl);
 			return (1);
 		}
