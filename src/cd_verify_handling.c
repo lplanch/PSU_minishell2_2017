@@ -16,11 +16,13 @@ int cd_pathname(svar_t *svar, char *command, char *pathname)
 	if (stat(pathname, &fstat) < 0) {
 		my_putstrror(pathname);
 		my_putstrror(": No such file or directory.\n");
+		svar->returnv = 1;
 	        return (0);
 	}
 	if (!S_ISDIR(fstat.st_mode)) {
 		my_putstrror(pathname);
 		my_putstrror(": Not a directory.\n");
+		svar->returnv = 1;
 		return (0);
 	}
 	chdir(pathname);
@@ -38,6 +40,7 @@ int cd_less(svar_t *svar, char *command, char *pathname)
 		return (0);
 	if (OLDPWD == -1) {
 		my_putstrror(": No such file or directory.\n");
+		svar->returnv = 1;
 	} else {
 		switch_env_cd_less(svar);
 	}
@@ -60,6 +63,7 @@ int cd_jalapeno(svar_t *svar, char *command, char *pathname)
 		free(temp_home);
 	} else {
 		my_putstrror("User directory not found (no home and user).\n");
+		svar->returnv = 1;
 	}
 	return (1);
 }

@@ -63,6 +63,7 @@ void main_cd_command(svar_t *svar, char *command)
 		pathname = temp;
 	if (count_command_args(command) > 1) {
 		my_putstrror("cd: Too many arguments.\n");
+		svar->returnv = 1;
 		return;
 	}
 	for (int i = 0; right_cd[i] != NULL && iter == 0; i++) {
@@ -75,7 +76,7 @@ int verify_cd_command(svar_t *svar, char *command)
 {
 	if (!verify_command(command, "cd"))
 		return (0);
-	main_cd_command(svar, command);
 	svar->returnv = 0;
+	main_cd_command(svar, command);
 	return (1);
 }
