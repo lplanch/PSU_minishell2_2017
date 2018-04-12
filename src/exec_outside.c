@@ -17,7 +17,7 @@ int print_core_dump_errors(svar_t *svar, int wstatus)
 	} if (WCOREDUMP(wstatus)) {
 		my_putstrror(" (core dumped)");
 	} if (wstatus == 139 || wstatus == SIGSEGV ||
-	wstatus == 136 || wstatus == SIGPIPE || WCOREDUMP(wstatus)) {
+	wstatus == 136 || WCOREDUMP(wstatus)) {
 		my_putstrror("\n");
 		return (1);
 	}
@@ -30,13 +30,18 @@ int exec_out_prm(char *c_path, char *buff, svar_t *svar)
 	pid_t pid = fork();
 
 	if (pid < 0) {
-		perror("Fork :");
+		perror("Fork");
 	} else if (pid == 0) {
 		execve(c_path, create_table(buff), svar->c_env);
-		exit(0);
+		exit(errno);
 	} else {
 		waitpid(pid, &wstatus, 0);
-		if (print_core_dump_errors(svar, wstatus))
+		if (wstatus == 2048) {
+			my_putstrror(c_path);
+			my_putstrror(": Exec format error. ");
+			my_putstrror("Wrong Architecture.\n");
+			svar->returnv = 1;
+		} else if (print_core_dump_errors(svar, wstatus))
 			svar->returnv = wstatus;
 		else
 			svar->returnv = WEXITSTATUS(wstatus);

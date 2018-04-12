@@ -49,7 +49,6 @@ void make_user_commands(svar_t *svar, char **acmd, int *aredir, int *arr_fd)
 		pipe_command(svar, acmd[i], arr_fd, (int[2]){i, len});
 	if (command_is_buildtin(acmd[len - 1])) {
 		verify_user_command(svar, acmd[len - 1]);
-		my_putchar('\b');
 	} else {
 		pipe_command(svar, acmd[len - 1], arr_fd,
 		(int[2]){len - 1, len});
@@ -88,6 +87,8 @@ void parse_user_commands(svar_t *svar)
 			redirect_user_commands(svar, arr_cmd_fd, arr_redirect);
 			free_tbl(arr_cmd_fd);
 			free(arr_redirect);
+		} else {
+			svar->returnv = 1;
 		}
 	}
 }
