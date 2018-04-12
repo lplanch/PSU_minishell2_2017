@@ -16,7 +16,6 @@ int verify_binary_command(svar_t *svar, char *command)
 		return (0);
 	if (!S_ISDIR(fstat.st_mode) && fstat.st_mode & S_IXUSR) {
 		exec_out_prm(command, command, svar);
-		svar->returnv = 0;
 	} else {
 		my_putstrror(command);
 		my_putstrror(": Permission denied.\n");

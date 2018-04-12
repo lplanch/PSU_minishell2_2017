@@ -31,6 +31,9 @@ FILES		=	src/main_minishell2.c			\
 			src/verify_user_command.c		\
 			src/command_handling.c			\
 			src/arguments_handling.c		\
+			src/make_table_int_redirect.c		\
+			src/parse_user_redirect.c		\
+			src/redirect_fork_commands.c		\
 
 SRCS		=	$(FILES)
 

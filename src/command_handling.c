@@ -28,10 +28,8 @@ char *semicolon_formating(char *command)
 	char *result;
 
 	for (int i = 0; command[i] != '\0'; i++) {
-		if (command[i] == ';' &&
-			((i != 0 && command[i - 1] != ' ') ||
-			command[i + 1] != ' '))
-			nbr_to_add += 1;
+		if (command[i] == ';')
+			nbr_to_add += 2;
 	}
 	result = my_calloc(sizeof(char) * (my_strlen(command) + nbr_to_add));
 	for (int i = 0; command[i] != '\0'; i++) {
@@ -41,38 +39,37 @@ char *semicolon_formating(char *command)
 	return (result);
 }
 
-char **malloc_table_command(char *command)
+char **malloc_table_command(char *cmd)
 {
-	char **result = malloc(sizeof(char *) * (count_chr(command, ';') + 2));
+	char **result = malloc(sizeof(char *) * (count_chr(cmd, ';') + 2));
 	int iter = 0;
 	int count = 0;
 
-	for (int i = 0; command[i] != '\0'; i++) {
-		if (command[i] == ';') {
+	for (int i = (cmd[0] == ';' ? 1 : 0); cmd[i] != '\0'; i++) {
+		if (cmd[i] == ';') {
 			result[count] = my_calloc(sizeof(char) * (iter + 1));
 			count += 1;
 			iter = 0;
-		} else {
+		} else
 			iter += 1;
-		}
 	}
 	result[count] = my_calloc(sizeof(char) * (iter + 1));
 	return (result);
 }
 
-char **make_table_command(char *command)
+char **make_table_command(char *cmd)
 {
-	char **result = malloc_table_command(command);
+	char **result = malloc_table_command(cmd);
 	int count = 0;
 	int iter = 0;
 	char *temp;
 
-	for (int i = 0; command[i] != '\0'; i++) {
-		if (command[i] == ';')
+	for (int i = (cmd[0] == ';' ? 1 : 0); cmd[i] != '\0'; i++) {
+		if (cmd[i] == ';' && cmd[i + 1] != ';' && cmd[i + 1] != '\0') {
 			count += 1;
-		else
-			result[count][iter] = command[i];
-		iter = (command[i] == ';' ? 0 : iter + 1);
+		} else
+			result[count][iter] = cmd[i];
+		iter = (cmd[i] == ';' ? 0 : iter + 1);
 	}
 	result[count + 1] = NULL;
 	for (int i = 0; result[i] != NULL; i++) {

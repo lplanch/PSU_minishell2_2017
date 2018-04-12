@@ -8,19 +8,20 @@
 #include "my.h"
 #include "minishell2.h"
 
-void print_core_dump_errors(svar_t *svar, int wstatus)
+int print_core_dump_errors(svar_t *svar, int wstatus)
 {
 	if (wstatus == 139 || wstatus == SIGSEGV) {
 		my_putstrror("Segmentation fault");
-		svar->returnv = 139;
-	} if (wstatus == SIGFPE) {
-		my_putstrror("Floating point exception");
-		svar->returnv = 136;
+	} if (wstatus == 136) {
+		my_putstrror("Floating exception");
 	} if (WCOREDUMP(wstatus)) {
 		my_putstrror(" (core dumped)");
 	} if (wstatus == 139 || wstatus == SIGSEGV ||
-		wstatus == SIGPIPE || WCOREDUMP(wstatus))
+	wstatus == 136 || wstatus == SIGPIPE || WCOREDUMP(wstatus)) {
 		my_putstrror("\n");
+		return (1);
+	}
+	return (0);
 }
 
 int exec_out_prm(char *c_path, char *buff, svar_t *svar)
@@ -35,7 +36,10 @@ int exec_out_prm(char *c_path, char *buff, svar_t *svar)
 		exit(0);
 	} else {
 		waitpid(pid, &wstatus, 0);
-		print_core_dump_errors(svar, wstatus);
+		if (print_core_dump_errors(svar, wstatus))
+			svar->returnv = wstatus;
+		else
+			svar->returnv = WEXITSTATUS(wstatus);
 	}
 	return (1);
 }
@@ -58,6 +62,16 @@ int verify_path_exec(svar_t *svar, char *command, char *path_line)
 		return (1);
 	}
 	free(c_path);
+	return (0);
+}
+
+int command_is_buildtin(char *command)
+{
+	if (verify_command(command, "cd") || verify_command(command, "env") ||
+		verify_command(command, "setenv") ||
+		verify_command(command, "unsetenv")
+		|| verify_command(command, "exit"))
+		return (1);
 	return (0);
 }
 

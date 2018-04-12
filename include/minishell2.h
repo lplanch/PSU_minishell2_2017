@@ -26,6 +26,7 @@ typedef struct shell_var
 
 //VERIFY USER COMMAND
 void parse_user_commands(svar_t *svar);
+void verify_user_command(svar_t *svar, char *command);
 int verify_exit_command(svar_t *svar, char *command);
 int verify_env_command(svar_t *svar, char *command);
 int verify_cd_command(svar_t *svar, char *command);
@@ -41,7 +42,7 @@ char *make_clean_cmd(char *buff);
 
 //EXEC OTHER PATH COMMAND
 int exec_outside(svar_t *svar, char *command);
-int exec_outside_wpath(svar_t *svar, char *command);
+int command_is_buildtin(char *command);
 
 //CD HANDLING
 int cd_less(svar_t *svar, char *command, char *pathname);
@@ -58,6 +59,15 @@ int free_svar_exit(svar_t *svar);
 
 //PROMPT
 void print_custom_prompt(svar_t *svar);
+
+//PIPE AND REDIRECT HANDLING
+int *make_table_int_redirect(char *command);
+int verify_redirect_formating(char *command);
+int count_redirect(char *command);
+char **make_table_redir_command(char *cmd);
+
+//ALL REDIRECTIONS AND PIPES
+void pipe_command(svar_t *svar, char *command, int *arr_fd, int *iter);
 
 //PARSING USER COMMAND
 void get_user_command(svar_t *svar);
