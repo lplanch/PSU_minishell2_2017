@@ -10,7 +10,9 @@
 
 int verify_exit_command(svar_t *svar, char *command)
 {
-	if (!verify_command(command, "exit"))
+	char *temp = get_command_without_args(command);
+
+	if (my_strcmp(temp, "exit") != 0)
 		return (0);
 	svar->done = 1;
 	svar->returnv = 0;

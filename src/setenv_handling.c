@@ -70,7 +70,9 @@ int main_setenv(svar_t *svar, char *command)
 
 int verify_setenv_command(svar_t *svar, char *command)
 {
-	if (!verify_command(command, "setenv"))
+	char *temp = get_command_without_args(command);
+
+	if (my_strcmp(temp, "setenv") != 0)
 		return (0);
 	svar->returnv = 0;
 	main_setenv(svar, command);

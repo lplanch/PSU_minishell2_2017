@@ -74,8 +74,13 @@ void main_cd_command(svar_t *svar, char *command)
 
 int verify_cd_command(svar_t *svar, char *command)
 {
-	if (!verify_command(command, "cd"))
+	char *temp = get_command_without_args(command);
+
+	if (my_strcmp(temp, "cd") != 0) {
+		free(temp);
 		return (0);
+	}
+	free(temp);
 	svar->returnv = 0;
 	main_cd_command(svar, command);
 	return (1);

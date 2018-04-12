@@ -26,8 +26,13 @@ void main_unsetenv(svar_t *svar, char *command)
 
 int verify_unsetenv_command(svar_t *svar, char *command)
 {
-	if (!verify_command(command, "unsetenv"))
+	char *temp = get_command_without_args(command);
+
+	if (my_strcmp(temp, "unsetenv") != 0) {
+		free(temp);
 		return (0);
+	}
+	free(temp);
 	svar->returnv = 0;
 	main_unsetenv(svar, command);
 	return (1);

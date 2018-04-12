@@ -53,7 +53,9 @@ void print_env(svar_t *svar)
 
 int verify_env_command(svar_t *svar, char *command)
 {
-	if (my_strcmp(command, "env") != 0)
+	char *temp = get_command_without_args(command);
+
+	if (my_strcmp(temp, "env") != 0)
 		return (0);
 	print_env(svar);
 	svar->returnv = 0;

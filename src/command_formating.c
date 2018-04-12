@@ -78,8 +78,8 @@ void get_user_command(svar_t *svar)
 
 int verify_command(char *command, char *verify)
 {
-	for (int i = 0; verify[i] != '\0'; i++) {
-		if (verify[i] != command[i])
+	for (int i = 0; command[i] != '\0'; i++) {
+		if (command[i] != verify[i])
 			return (0);
 	}
 	return (1);
