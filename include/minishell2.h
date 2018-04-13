@@ -11,6 +11,7 @@
 #include <sys/wait.h>
 #include <sys/time.h>
 #include <sys/resource.h>
+#include <fcntl.h>
 #include <errno.h>
 #include <stdio.h>
 
@@ -68,6 +69,7 @@ char **make_table_redir_command(char *cmd);
 
 //ALL REDIRECTIONS AND PIPES
 void pipe_command(svar_t *svar, char *command, int *arr_fd, int *iter);
+void right_redirect(svar_t *svar, char *command, int *arr_fd, int iter);
 
 //PARSING USER COMMAND
 void get_user_command(svar_t *svar);

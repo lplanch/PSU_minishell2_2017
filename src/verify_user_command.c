@@ -45,8 +45,10 @@ void make_user_commands(svar_t *svar, char **acmd, int *aredir, int *arr_fd)
 {
 	int len = count_lines(acmd);
 
-	for (int i = 0; acmd[i + 1] != NULL; i++)
-		pipe_command(svar, acmd[i], arr_fd, (int[2]){i, len});
+	for (int i = 0; acmd[i + 1] != NULL; i++) {
+		if (aredir[i] == 1)
+			pipe_command(svar, acmd[i], arr_fd, (int[2]){i, len});
+	}
 	if (command_is_buildtin(acmd[len - 1])) {
 		verify_user_command(svar, acmd[len - 1]);
 	} else {
