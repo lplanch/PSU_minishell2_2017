@@ -11,14 +11,14 @@
 int print_core_dump_errors(svar_t *svar, int wstatus)
 {
 	if (wstatus == 139 || wstatus == SIGSEGV) {
-		my_putstrror("Segmentation fault");
+		my_putstr("Segmentation fault");
 	} if (wstatus == 136) {
-		my_putstrror("Floating exception");
+		my_putstr("Floating exception");
 	} if (WCOREDUMP(wstatus)) {
-		my_putstrror(" (core dumped)");
+		my_putstr(" (core dumped)");
 	} if (wstatus == 139 || wstatus == SIGSEGV ||
 	wstatus == 136 || WCOREDUMP(wstatus)) {
-		my_putstrror("\n");
+		my_putstr("\n");
 		return (1);
 	}
 	return (0);
