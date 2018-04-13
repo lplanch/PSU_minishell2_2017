@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2018
 ** count_chr_tbl.c
 ** File description:
-**
+** count_chr
 */
 
 #include "my.h"

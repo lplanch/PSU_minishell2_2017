@@ -52,7 +52,7 @@ int verify_redirect_formating(char *cmd)
 
 	for (int i = 0; cmd[i] != '\0'; i++) {
 		if (!iter_redirect_verify(cmd, i,
-		(int*[3]){&found, &space, &dobble}))
+			(int*[3]){&found, &space, &dobble}))
 			return (0);
 	}
 	if (found == 1) {

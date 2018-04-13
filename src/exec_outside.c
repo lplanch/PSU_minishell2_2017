@@ -64,7 +64,7 @@ int verify_path_exec(svar_t *svar, char *command, char *path_line)
 		free(file_name);
 	} else
 		c_path = command_name;
-		aif (access(c_path, F_OK) == 0) {
+	if (access(c_path, F_OK) == 0) {
 		exec_out_prm(c_path, command, svar);
 		free(c_path);
 		return (1);
@@ -78,8 +78,8 @@ int command_is_buildtin(char *command)
 	char *temp = get_command_without_args(command);
 
 	if (!my_strcmp(temp, "cd")|| !my_strcmp(temp, "env") ||
-		!my_strcmp(temp, "setenv") || !my_strcmp(temp, "unsetenv") ||
-		!my_strcmp(temp, "exit")) {
+	!my_strcmp(temp, "setenv") || !my_strcmp(temp, "unsetenv") ||
+	!my_strcmp(temp, "exit")) {
 		free(temp);
 		return (1);
 	}
