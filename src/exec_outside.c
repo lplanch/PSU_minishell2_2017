@@ -57,11 +57,14 @@ int verify_path_exec(svar_t *svar, char *command, char *path_line)
 	char *command_name;
 
 	command_name = get_command_without_args(command);
-	file_name = my_strcat("/", command_name);
-	free(command_name);
-	c_path = my_strcat(path_line, file_name);
-	free(file_name);
-	if (access(c_path, F_OK) == 0) {
+	if (command_name[0] != '/') {
+		file_name = my_strcat("/", command_name);
+		c_path = my_strcat(path_line, file_name);
+		free(command_name);
+		free(file_name);
+	} else
+		c_path = command_name;
+		aif (access(c_path, F_OK) == 0) {
 		exec_out_prm(c_path, command, svar);
 		free(c_path);
 		return (1);
