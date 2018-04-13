@@ -72,11 +72,15 @@ int verify_path_exec(svar_t *svar, char *command, char *path_line)
 
 int command_is_buildtin(char *command)
 {
-	if (verify_command(command, "cd") || verify_command(command, "env") ||
-		verify_command(command, "setenv") ||
-		verify_command(command, "unsetenv")
-		|| verify_command(command, "exit"))
+	char *temp = get_command_without_args(command);
+
+	if (!my_strcmp(temp, "cd")|| my_strcmp(temp, "env") ||
+		my_strcmp(temp, "setenv") || my_strcmp(temp, "unsetenv") ||
+		my_strcmp(temp, "exit")) {
+		free(temp);
 		return (1);
+	}
+	free(temp);
 	return (0);
 }
 

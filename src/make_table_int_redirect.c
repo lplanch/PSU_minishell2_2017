@@ -10,34 +10,57 @@
 
 int char_is_redir(char chr)
 {
-	if (chr == '|' || chr == '<' || chr == '>')
+	if (chr == '|')
 		return (1);
+	if (chr == '<')
+		return (2);
+	if (chr == '>')
+		return (3);
 	return (0);
+}
+
+int iter_redirect_verify(char *cmd, int i, int **iters)
+{
+	if (cmd[i] != ' ' && char_is_redir(cmd[i]) == 0)
+		*iters[0] = 0;
+	if (char_is_redir(cmd[i]) > 0 && *iters[0] == 0) {
+		*iters[0] = char_is_redir(cmd[i]);
+	} else if (char_is_redir(cmd[i]) && *iters[0] == 1) {
+		my_putstrror("Invalid null command.\n");
+		return (0);
+	} if ((char_is_redir(cmd[i]) == 2 && *iters[0] == 3) ||
+	(char_is_redir(cmd[i]) == 3 && *iters[0] == 2) || (*iters[2] == 1 &&
+	char_is_redir(cmd[i]) > 1 && char_is_redir(cmd[i]) == *iters[0])) {
+		my_putstrror("Missing name for redirect.\n");
+		return (0);
+	}
+	if (*iters[1] == 0 && char_is_redir(cmd[i]) > 1 &&
+	char_is_redir(cmd[i]) == *iters[0]) {
+		*iters[2] = 1;
+	} else
+		*iters[2] = 0;
+	*iters[1] = (cmd[i] == ' ' ? 1 : 0);
+	return (1);
 }
 
 int verify_redirect_formating(char *cmd)
 {
-	int found = 0;
+	int found = 1;
+	int space = 0;
+	int dobble = 0;
 	int len = my_strlen(cmd);
 
-	if (char_is_redir(cmd[0]) || char_is_redir(cmd[len - 1])) {
+	for (int i = 0; cmd[i] != '\0'; i++) {
+		if (!iter_redirect_verify(cmd, i,
+		(int*[3]){&found, &space, &dobble}))
+			return (0);
+	}
+	if (found == 1) {
 		my_putstrror("Invalid null command.\n");
 		return (0);
-	}
-	for (int i = 0; cmd[i] != '\0'; i++) {
-		if (cmd[i] != '|' && cmd[i] != ' ')
-			found = 1;
-		if (cmd[i] == '|' && found == 1) {
-			found = 0;
-		} else if (cmd[i] == '|' && found == 0) {
-			my_putstrror("Invalid null command.\n");
-			return (0);
-		} if (i < len - 3 && (cmd[i] == '<' || cmd[i] == '>') &&
-		(cmd[i + 1] == '<' || cmd[i + 1] == '>') &&
-		(cmd[i + 2] == '>' || cmd[i + 2] == '>')) {
-			my_putstrror("Missing name for redirect.\n");
-			return (0);
-		}
+	} else if (found > 1) {
+		my_putstrror("Missing name for redirect.\n");
+		return (0);
 	}
 	return (1);
 }
