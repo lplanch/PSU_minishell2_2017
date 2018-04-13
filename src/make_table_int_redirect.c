@@ -45,7 +45,7 @@ int iter_redirect_verify(char *cmd, int i, int **iters)
 
 int verify_redirect_formating(char *cmd)
 {
-	int found = 1;
+	int found = (cmd[0] != '\0' ? 1 : 0);
 	int space = 0;
 	int dobble = 0;
 	int len = my_strlen(cmd);

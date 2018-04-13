@@ -74,9 +74,9 @@ int command_is_buildtin(char *command)
 {
 	char *temp = get_command_without_args(command);
 
-	if (!my_strcmp(temp, "cd")|| my_strcmp(temp, "env") ||
-		my_strcmp(temp, "setenv") || my_strcmp(temp, "unsetenv") ||
-		my_strcmp(temp, "exit")) {
+	if (!my_strcmp(temp, "cd")|| !my_strcmp(temp, "env") ||
+		!my_strcmp(temp, "setenv") || !my_strcmp(temp, "unsetenv") ||
+		!my_strcmp(temp, "exit")) {
 		free(temp);
 		return (1);
 	}
