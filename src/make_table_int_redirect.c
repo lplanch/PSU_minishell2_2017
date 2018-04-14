@@ -21,7 +21,7 @@ int char_is_redir(char chr)
 
 int iter_redirect_verify(char *cmd, int i, int **iters)
 {
-	if (cmd[i] != ' ' && char_is_redir(cmd[i]) == 0)
+	if (cmd[i] != ' ' && cmd[i] != '\t' && char_is_redir(cmd[i]) == 0)
 		*iters[0] = 0;
 	if (char_is_redir(cmd[i]) > 0 && *iters[0] == 0) {
 		*iters[0] = char_is_redir(cmd[i]);
@@ -39,7 +39,7 @@ int iter_redirect_verify(char *cmd, int i, int **iters)
 		*iters[2] = 1;
 	} else
 		*iters[2] = 0;
-	*iters[1] = (cmd[i] == ' ' ? 1 : 0);
+	*iters[1] = (cmd[i] == ' ' || cmd[i] == '\t' ? 1 : 0);
 	return (1);
 }
 
