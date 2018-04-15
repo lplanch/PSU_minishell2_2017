@@ -16,8 +16,8 @@ int print_core_dump_errors(svar_t *svar, int wstatus)
 		my_putstrror("Floating exception");
 	} if (WCOREDUMP(wstatus)) {
 		my_putstrror(" (core dumped)");
-	} if (wstatus == 139 || wstatus == SIGSEGV ||
-	wstatus == 136 || WCOREDUMP(wstatus)) {
+	} if (wstatus == 139 || wstatus == SIGSEGV || wstatus == 136 ||
+	wstatus == SIGFPE|| WCOREDUMP(wstatus)) {
 		my_putstrror("\n");
 		return (1);
 	}
